@@ -10,10 +10,17 @@ def log_message_edit(sender, instance, **kwargs):
         try:
             old_message = Message.objects.get(pk=instance.pk)
             if old_message.content != instance.content:
-                MessageHistory.objects.create(message=instance, old_content=old_message.content)
-                instance.edited = True  # Just mark it; do NOT call save here!
+                # Track who edited the message
+                edited_by = instance.sender  # Assume sender is the editor (you can customize this logic)
+
+                MessageHistory.objects.create(
+                    message=instance,
+                    old_content=old_message.content,
+                    edited_by=edited_by  # New field
+                )
+                instance.edited = True  # Mark the message as edited
         except Message.DoesNotExist:
-            pass  # If message doesn't exist, it's a new one – skip
+            pass  # New message, no edit history needed
 
 
 @receiver(post_save, sender=Message)
