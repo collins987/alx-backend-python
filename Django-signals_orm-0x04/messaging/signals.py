@@ -1,17 +1,20 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
-from .models import Message, Notification
-from django.db.models.signals import pre_save
+from django.contrib.auth.models import User
 from .models import Message, Notification, MessageHistory
+
 
 @receiver(pre_save, sender=Message)
 def log_message_edit(sender, instance, **kwargs):
     if instance.pk:
-        old_message = Message.objects.get(pk=instance.pk)
-        if old_message.content != instance.content:
-            MessageHistory.objects.create(message=instance, old_content=old_message.content)
-            instance.edited = True
-            instance.save()
+        try:
+            old_message = Message.objects.get(pk=instance.pk)
+            if old_message.content != instance.content:
+                MessageHistory.objects.create(message=instance, old_content=old_message.content)
+                instance.edited = True  # Just mark it; do NOT call save here!
+        except Message.DoesNotExist:
+            pass  # If message doesn't exist, it's a new one – skip
+
 
 @receiver(post_save, sender=Message)
 def notify_receiver(sender, instance, created, **kwargs):
