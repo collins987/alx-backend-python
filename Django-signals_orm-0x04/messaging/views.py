@@ -30,7 +30,7 @@ def threaded_conversation(request, message_id):
     root_message = get_object_or_404(
         Message.objects.select_related('sender').prefetch_related('replies'),
         id=message_id,
-        sender=request.user  # ✅ Required by checker
+        sender=request.user  
     )
 
     def fetch_replies(msg):
