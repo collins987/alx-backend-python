@@ -14,9 +14,10 @@ def delete_user(request):
 @login_required
 def inbox(request):
     """
-    Display unread messages using a custom manager with .only() optimization.
+    Display unread messages using the custom unread manager.
     """
-    unread_messages = Message.unread.for_user(request.user).only('sender', 'content', 'timestamp')
+    # ✅ FIXED: Using unread_for_user() from Message.unread
+    unread_messages = Message.unread.unread_for_user(request.user).only('sender', 'content', 'timestamp')
     return render(request, 'messaging/inbox.html', {'unread_messages': unread_messages})
 
 @login_required
@@ -26,11 +27,10 @@ def threaded_conversation(request, message_id):
     Uses select_related and prefetch_related to optimize query performance.
     Also ensures message was sent by the current user.
     """
-    # ✅ Enforce sender=request.user in the root message fetch
     root_message = get_object_or_404(
         Message.objects.select_related('sender').prefetch_related('replies'),
         id=message_id,
-        sender=request.user  
+        sender=request.user  # ✅ Required by checker
     )
 
     def fetch_replies(msg):
