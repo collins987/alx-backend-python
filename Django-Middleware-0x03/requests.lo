@@ -1,6 +1,0 @@
-[2025-08-05 15:23:41] INFO 127.0.0.1 "GET /api/users/ HTTP/1.1" 200 152ms "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-[2025-08-05 15:23:45] INFO 127.0.0.1 "POST /api/login/ HTTP/1.1" 200 89ms "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-[2025-08-05 15:23:50] INFO 127.0.0.1 "GET /api/profile/ HTTP/1.1" 401 34ms "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-[2025-08-05 15:24:01] INFO 192.168.1.10 "GET /admin/ HTTP/1.1" 302 13ms "Mozilla/5.0 (X11; Linux x86_64)"
-[2025-08-05 15:24:05] INFO 192.168.1.10 "POST /api/products/ HTTP/1.1" 201 103ms "PostmanRuntime/7.26.8"
-[2025-08-05 15:24:10] INFO 127.0.0.1 "DELETE /api/products/42/ HTTP/1.1" 204 77ms "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
