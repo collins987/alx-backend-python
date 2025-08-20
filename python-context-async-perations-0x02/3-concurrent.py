@@ -14,7 +14,7 @@ async def async_fetch_users():
             return rows
 
 
-async def async_fetch_older_users(db_name: str = "mydatabase.db"):
+async def async_fetch_older_users():
     """
     Fetch users older than 40 asynchronously
     """
