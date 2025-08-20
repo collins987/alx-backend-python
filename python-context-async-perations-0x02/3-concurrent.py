@@ -4,7 +4,7 @@ import asyncio
 import aiosqlite
 
 
-async def async_fetch_users(db_name: str = "mydatabase.db"):
+async def async_fetch_users():
     """
     Fetch all users asynchronously
     """
